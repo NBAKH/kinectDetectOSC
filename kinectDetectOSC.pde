@@ -29,7 +29,7 @@ int[] coordinates = {436,280,378,224,336,189,305,181,252,170,207,175,154,208,64,
 };
 
 public int [] rawData;
-public int tolerence = 50;
+public int tolerence = 500;
 
 void setup() {
   int cCount = 0;
@@ -39,7 +39,7 @@ void setup() {
   }
 
   size(512, 424, P3D);
-  frameRate(20);
+  frameRate(15);
   kinect = new KinectPV2(this);
   kinect.enableDepthImg(true);
   kinect.init();
@@ -55,6 +55,7 @@ void draw() {
     triggers[i].arrayNumber = triggers[i].xValue + width * triggers[i].yValue;
     // triggers[i].checkStatus(rawData[triggers[i].arrayNumber]);
     triggers[i].checkStatus(averageVal(i));
+    println(i + " average value:"+averageVal(i));
     triggers[i].drawField();
   }
 
@@ -68,12 +69,20 @@ int averageVal(int trigNum){
   int sum=0;
   int amount=0;
   int average=0;
-  for(int i = triggers[trigNum].arrayNumber-20; i<triggers[trigNum].arrayNumber+20; i++){
-    sum+=rawData[i];
+  for(int i = triggers[trigNum].arrayNumber-10; i<triggers[trigNum].arrayNumber+10; i++){
+    if(rawData[i]==0){
+      sum +=7000;
+    }else{
+      sum+=rawData[i];
+    }
     amount++;
   }
-  for(int i = triggers[trigNum].yValue-20; i<triggers[trigNum].yValue+20; i++){
-    sum+=rawData[triggers[trigNum].xValue + width * triggers[trigNum].yValue+i];
+  for(int i = triggers[trigNum].yValue-10; i<triggers[trigNum].yValue+10; i++){
+    if(rawData[triggers[trigNum].xValue + width * triggers[trigNum].yValue+i]==0){
+      sum +=7000;
+    }else{
+      sum+=rawData[triggers[trigNum].xValue + width * triggers[trigNum].yValue+i];
+    }
     amount++;
   }
   average= sum/amount;
@@ -98,16 +107,17 @@ void mouseDragged(){
 void keyPressed(){
   if (key == 'c'){
     for (int i = 0; i < triggers.length; i ++ ) {
-      triggers[i].setBase(rawData[triggers[i].arrayNumber]);
+      //triggers[i].setBase(rawData[triggers[i].arrayNumber]);
+      triggers[i].setBase(averageVal(i));
       println("zone: " + i +" array number: " + triggers[i].arrayNumber + ", threshold: "+triggers[i].threshold);
     }
       // println(rawData);
   }
   if (key == 'o'){
-    tolerence+=10; println("tolerence: "+ tolerence);
+    tolerence+=50; println("tolerence: "+ tolerence);
   }
   if (key == 'l'){
-    tolerence-=10; println("tolerence: "+ tolerence);
+    tolerence-=50; println("tolerence: "+ tolerence);
   }
 }
 

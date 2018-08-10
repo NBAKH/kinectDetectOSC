@@ -51,5 +51,4 @@ class Trigger{
     }
     threshold = avg;
   }
-
 }
