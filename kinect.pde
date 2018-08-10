@@ -19,10 +19,10 @@ OscP5 oscP5;
 NetAddress myRemoteLocation;
 
 Trigger[] triggers = new Trigger[8];
-String[] OSCm = {"/layer12/opacityandvolume","/layer12/opacityandvolume",
-"/layer12/opacityandvolume","/layer12/opacityandvolume",
-"/layer12/opacityandvolume","/layer12/opacityandvolume",
-"/layer12/opacityandvolume","/layer12/opacityandvolume"};
+String[] OSCm = {"/layer12/opacityandvolume","/layer14/opacityandvolume",
+"/layer8/opacityandvolume","/layer4/opacityandvolume",
+"/layer10/opacityandvolume","/layer16/opacityandvolume",
+"/layer6/opacityandvolume","/layer2/opacityandvolume"};
 
 public int [] rawData;
 public int tolerence = 50;
