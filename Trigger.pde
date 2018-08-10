@@ -6,6 +6,7 @@ class Trigger{
   int calibrateaValue = 0;
   int threshold;
   int arrayNumber;
+  int avrNum;
   boolean trig;
   color c = color(255,0,0);
 

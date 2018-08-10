@@ -1,4 +1,5 @@
 /*
+By Tvebak
 Project in cooperation with Luftkys
 credit to the library creators
 
@@ -24,12 +25,17 @@ String[] OSCm = {"/layer12/opacityandvolume","/layer14/opacityandvolume",
 "/layer10/opacityandvolume","/layer16/opacityandvolume",
 "/layer6/opacityandvolume","/layer2/opacityandvolume"};
 
+int[] coordinates = {436,280,378,224,336,189,305,181,252,170,207,175,154,208,64,250
+};
+
 public int [] rawData;
 public int tolerence = 50;
 
 void setup() {
+  int cCount = 0;
   for (int i = 0; i < triggers.length; i ++ ) {
-    triggers[i] = new Trigger(20+i*60, 20, i+1);
+    triggers[i] = new Trigger(coordinates[cCount], coordinates[cCount+1], i+1);
+    cCount+=2;
   }
 
   size(512, 424, P3D);
@@ -46,7 +52,9 @@ void draw() {
   rawData= kinect.getRawDepthData();
   background(0);
   for (int i = 0; i < triggers.length; i++) {
-    triggers[i].checkStatus(rawData[triggers[i].arrayNumber]);
+    triggers[i].arrayNumber = triggers[i].xValue + width * triggers[i].yValue;
+    // triggers[i].checkStatus(rawData[triggers[i].arrayNumber]);
+    triggers[i].checkStatus(averageVal(i));
     triggers[i].drawField();
   }
 
@@ -54,6 +62,22 @@ void draw() {
   sendOSC();
   stroke(255);
   text(frameRate, 50, height - 50);
+}
+
+int averageVal(int trigNum){
+  int sum=0;
+  int amount=0;
+  int average=0;
+  for(int i = triggers[trigNum].arrayNumber-20; i<triggers[trigNum].arrayNumber+20; i++){
+    sum+=rawData[i];
+    amount++;
+  }
+  for(int i = triggers[trigNum].yValue-20; i<triggers[trigNum].yValue+20; i++){
+    sum+=rawData[triggers[trigNum].xValue + width * triggers[trigNum].yValue+i];
+    amount++;
+  }
+  average= sum/amount;
+  return average;
 }
 
 void mouseDragged(){
