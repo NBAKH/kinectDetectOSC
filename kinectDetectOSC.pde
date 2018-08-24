@@ -77,7 +77,7 @@ int averageVal(int trigNum){
     }
     amount++;
   }
-  for(int i = triggers[trigNum].yValue-triggers[trigNum].size; i<triggers[trigNum].yValue+triggers[trigNum].size; i++){
+  for(int i = triggers[trigNum].yValue-triggers[trigNum].size/2; i<triggers[trigNum].yValue+triggers[trigNum].size/2; i++){
     if(rawData[triggers[trigNum].xValue + width * triggers[trigNum].yValue+i]==0){
       sum +=7000;
     }else{
