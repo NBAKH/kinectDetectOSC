@@ -1,7 +1,7 @@
 class Trigger{
   int xValue;
   int yValue;
-  int size = 40;
+  int size = 30;
   int number;
   int calibrateaValue = 0;
   int threshold;
@@ -23,6 +23,7 @@ class Trigger{
     ellipse(xValue,yValue,size,size);
     point(xValue,yValue);
     fill(0,0,255);
+    textSize(25);
     text(number,xValue,yValue);
   }
 
